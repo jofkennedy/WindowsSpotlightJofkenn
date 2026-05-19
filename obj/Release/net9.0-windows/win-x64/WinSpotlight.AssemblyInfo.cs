@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WinSpotlight")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4632916047b4e1b7484a092da88b0ff2bb2a638f")]
 [assembly: System.Reflection.AssemblyProductAttribute("WinSpotlight")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WinSpotlight")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
