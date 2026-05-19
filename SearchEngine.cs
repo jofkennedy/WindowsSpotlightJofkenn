@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
 namespace WinSpotlight
 {
@@ -11,6 +14,7 @@ namespace WinSpotlight
         public string Path { get; set; }
         public string Description { get; set; }
         public bool IsApp { get; set; }
+        public System.Windows.Media.ImageSource Icon { get; set; }
     }
 
     public static class SearchEngine
@@ -42,12 +46,30 @@ namespace WinSpotlight
                     
                     if (name.Contains("uninstall", StringComparison.OrdinalIgnoreCase)) continue;
 
+                    System.Windows.Media.ImageSource icon = null;
+                    try
+                    {
+                        using (var sysIcon = System.Drawing.Icon.ExtractAssociatedIcon(f))
+                        {
+                            if (sysIcon != null)
+                            {
+                                icon = Imaging.CreateBitmapSourceFromHIcon(
+                                    sysIcon.Handle,
+                                    Int32Rect.Empty,
+                                    BitmapSizeOptions.FromEmptyOptions());
+                                icon.Freeze(); // important for cross-thread access
+                            }
+                        }
+                    }
+                    catch { }
+
                     _apps.Add(new SuggestionItem
                     {
                         Title = name,
                         Path = f,
                         Description = "App",
-                        IsApp = true
+                        IsApp = true,
+                        Icon = icon
                     });
                 }
             }

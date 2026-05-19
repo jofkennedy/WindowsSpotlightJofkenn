@@ -17,3 +17,11 @@ C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\obj\Debug\net9.0-windows\re
 C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\obj\Debug\net9.0-windows\WinSpotlight.pdb
 C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\obj\Debug\net9.0-windows\WinSpotlight.genruntimeconfig.cache
 C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\obj\Debug\net9.0-windows\ref\WinSpotlight.dll
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\obj\Debug\net9.0-windows\WinSpotlight.sourcelink.json
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\bin\Debug\net9.0-windows\Microsoft.Win32.SystemEvents.dll
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\bin\Debug\net9.0-windows\System.Drawing.Common.dll
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\bin\Debug\net9.0-windows\System.Private.Windows.Core.dll
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\bin\Debug\net9.0-windows\System.Private.Windows.GdiPlus.dll
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\bin\Debug\net9.0-windows\runtimes\win\lib\net9.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\obj\Debug\net9.0-windows\WinSpotlight.csproj.AssemblyReference.cache
+C:\Users\Jo\.gemini\antigravity\scratch\WinSpotlight\obj\Debug\net9.0-windows\WinSpotl.55C28648.Up2Date
