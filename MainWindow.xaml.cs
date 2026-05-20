@@ -6,12 +6,18 @@ using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Linq;
+using Microsoft.Win32;
+using System.Windows.Media.Animation;
+
 
 namespace WinSpotlight
 {
     public partial class MainWindow : Window
     {
         private GlobalHotKey _hotKey;
+        private Storyboard? _showStoryboard;
+        private Storyboard? _hideStoryboard;
+        private bool _isHiding = false;
 
         public MainWindow()
         {
@@ -25,13 +31,41 @@ namespace WinSpotlight
             var handle = new WindowInteropHelper(this).Handle;
             _hotKey = new GlobalHotKey(handle, 9000, GlobalHotKey.MOD_ALT, 0x43, OnHotKeyPressed);
             
+            _showStoryboard = this.Resources["ShowStoryboard"] as Storyboard;
+            _hideStoryboard = this.Resources["HideStoryboard"] as Storyboard;
+            
+            SetStartup();
+            
             System.Threading.Tasks.Task.Run(() => SearchEngine.Init());
             this.Hide();
         }
 
+        private void SetStartup()
+        {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    string appName = "WinSpotlight";
+                    string currentPath = Process.GetCurrentProcess().MainModule?.FileName;
+                    if (!string.IsNullOrEmpty(currentPath) && key != null)
+                    {
+                        if (key.GetValue(appName) as string != currentPath)
+                        {
+                            key.SetValue(appName, currentPath);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Fail silently if unable to write to registry
+            }
+        }
+
         private void OnHotKeyPressed()
         {
-            if (this.Visibility == Visibility.Visible)
+            if (this.Visibility == Visibility.Visible && !_isHiding)
                 HideWindow();
             else
                 ShowWindow();
@@ -39,14 +73,44 @@ namespace WinSpotlight
 
         private void ShowWindow()
         {
+            _isHiding = false;
+            this.Opacity = 0;
             this.Show();
             this.Activate();
             SearchBox.SelectAll();
             SearchBox.Focus();
+
+            _showStoryboard?.Begin(this, true);
         }
 
         private void HideWindow()
         {
+            if (_isHiding) return;
+            _isHiding = true;
+
+            if (_hideStoryboard != null)
+            {
+                _hideStoryboard.Completed -= HideStoryboard_Completed;
+                _hideStoryboard.Completed += HideStoryboard_Completed;
+                _hideStoryboard.Begin(this, true);
+            }
+            else
+            {
+                ActualHide();
+            }
+        }
+
+        private void HideStoryboard_Completed(object? sender, EventArgs e)
+        {
+            if (_isHiding)
+            {
+                ActualHide();
+            }
+        }
+
+        private void ActualHide()
+        {
+            _isHiding = false;
             this.Hide();
             SearchBox.Text = "";
             SuggestionsList.Visibility = Visibility.Collapsed;
